@@ -18,7 +18,7 @@ import me.noodles.gui.main.Main;
 
 public class Punish implements Listener, CommandExecutor {
 
-	public static OfflinePlayer bannedPlayer;
+	public static String bannedPlayer;
 
 	public Punish() {
 		this.bannedPlayer = null;
@@ -33,6 +33,7 @@ public class Punish implements Listener, CommandExecutor {
 		if (!cmd.getName().equalsIgnoreCase("punish")) {
 			return true;
 		}
+		// Is better to check if the player has permission first
 		if (!sender.hasPermission("punish.use")) {
 			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("NoPermission")));
 			return true;
@@ -41,6 +42,7 @@ public class Punish implements Listener, CommandExecutor {
 			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("NoMessage")));
 			return true;
 		}
+		// Don't use .getOfflinePlayer(args[0])!!
 		if (args.length == 1) {
 		      bannedPlayer = args[0];
 		}
@@ -48,6 +50,7 @@ public class Punish implements Listener, CommandExecutor {
 			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("NoMessage")));
 			return true;
 		}
+		// The max name characters in minecraft is 16
 		if(bannedPlayer.length() > 16){
 	        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("NameLength"))); 
 			return true;
