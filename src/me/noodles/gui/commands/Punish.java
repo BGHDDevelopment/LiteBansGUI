@@ -33,24 +33,23 @@ public class Punish implements Listener, CommandExecutor {
 		if (!cmd.getName().equalsIgnoreCase("punish")) {
 			return true;
 		}
+		if (!sender.hasPermission("punish.use")) {
+			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("NoPermission")));
+			return true;
+		}
 		if (args.length < 1) {
 			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("NoMessage")));
 			return true;
 		}
 		if (args.length == 1) {
-			//bannedPlayer = Bukkit.getPlayer(args[0]);
-			bannedPlayer = Bukkit.getOfflinePlayer(args[0]);
-		}
-		if (!sender.hasPermission("punish.use")) {
-			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("NoPermission")));
-			return true;
+		      bannedPlayer = args[0];
 		}
 		if (args.length > 1) {
 			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("NoMessage")));
 			return true;
 		}
-		if (bannedPlayer == null) {
-			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("OfflinePlayer")));
+		if(bannedPlayer.length() > 16){
+	        	sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.plugin.getConfig().getString("NameLength"))); 
 			return true;
 		}
 		InvCreator.Main.setItem(Main.plugin.getguiitems1Config().getInt("ChatOffensesLocation"), Items.ChatOffences(p));
